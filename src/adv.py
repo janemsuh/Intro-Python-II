@@ -1,4 +1,7 @@
+import textwrap
+
 from room import Room
+from player import Player
 
 # Declare all the rooms
 
@@ -49,3 +52,37 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
+
+def layout():
+    print(f'{textwrap.shorten(player.current_room.description, 200)}')
+
+new_player = input("Enter player's name: ")
+player = Player(new_player, room['outside'])
+print(f'\n{player.name} is ready to move...')
+print(f'Starting Location: {player.current_room.name}')
+layout()
+
+
+while True:
+    # ask for user input
+    move = input('\nWhat is your next move? (n, s, e, w): ')
+
+    # parse move
+    if (move == 'n') & (player.current_room.n_to != None):
+        player.current_room = player.current_room.n_to
+        print(f'\nMoved north to the {player.current_room.name}')
+    elif (move == 's') & (player.current_room.s_to != None):
+        player.current_room = player.current_room.s_to
+        print(f'\nMoved south to the {player.current_room.name}')
+    elif (move == 'e') & (player.current_room.e_to != None):
+        player.current_room = player.current_room.e_to
+        print(f'\nMoved east to the {player.current_room.name}')
+    elif (move == 'w') & (player.current_room.w_to != None):
+        player.current_room = player.current_room.w_to
+        print(f'\nMoved west to the {player.current_room.name}')
+    elif (move not in ['n', 's', 'e', 'w']):
+        print('\n****** NOT A VALID MOVE ******')
+    else:
+        print(f'\nStill in the {player.current_room.name}.')
+    layout()
