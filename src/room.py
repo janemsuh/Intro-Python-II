@@ -18,3 +18,13 @@ class Room:
             print(f'{self.name} has the following item(s):')
             for item in self.items:
                 print(item.name)
+
+    def addItem(self, *newItems):
+        for item in newItems:
+            self.items.append(item)
+
+    def removeItem(self, item):
+        if item in self.items:
+            self.items.remove(item)
+        else:
+            print(f'Cannot drop {item.name}.')
