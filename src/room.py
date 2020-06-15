@@ -9,3 +9,12 @@ class Room:
         self.s_to = None
         self.e_to = None
         self.w_to = None
+        self.items = []
+
+    def room_items(self):
+        if len(self.items) == 0:
+            print(f'{self.name} is empty.')
+        else:
+            print(f'{self.name} has the following item(s):')
+            for item in self.items:
+                print(item.name)

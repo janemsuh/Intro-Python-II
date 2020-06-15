@@ -2,6 +2,14 @@ import textwrap
 
 from room import Room
 from player import Player
+from item import Item
+
+# Declare all the items
+
+ring = Item('ring', 'family heirloom')
+hat = Item('hat', 'former property of Indiana Jones')
+rope = Item('rope', 'useful for climbing')
+journal = Item('journal', 'blank or written in invisible ink?')
 
 # Declare all the rooms
 
@@ -36,6 +44,12 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
+# Add items to rooms
+
+room['outside'].items.append(hat)
+room['foyer'].items.append(rope)
+room['narrow'].items.extend([ring, journal])
+
 #
 # Main
 #
@@ -66,7 +80,7 @@ layout()
 
 while True:
     # ask for user input
-    move = input('\nWhat is your next move? (n, s, e, w): ')
+    move = input(f"\nWhat is {player.name}'s next move? (n, s, e, w): ")
 
     # parse move
     if (move == 'n') & (player.current_room.n_to != None):
@@ -85,4 +99,5 @@ while True:
         print('\n****** NOT A VALID MOVE ******')
     else:
         print(f'\nStill in the {player.current_room.name}.')
+    player.current_room.room_items()
     layout()
