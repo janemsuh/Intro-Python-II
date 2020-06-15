@@ -13,9 +13,9 @@ class Room:
 
     def room_items(self):
         if len(self.items) == 0:
-            print(f'{self.name} is empty.')
+            print(f'\n{self.name} is empty.')
         else:
-            print(f'{self.name} has the following item(s):')
+            print(f'\n{self.name} has the following item(s):')
             for item in self.items:
                 print(item.name)
 
@@ -27,4 +27,4 @@ class Room:
         if item in self.items:
             self.items.remove(item)
         else:
-            print(f'Cannot drop {item.name}.')
+            print(f'\nCannot drop {item.name}.')

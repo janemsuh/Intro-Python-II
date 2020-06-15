@@ -7,13 +7,21 @@ class Player:
         self.current_room = current_room
         self.inventory = []
 
+    def player_inventory(self):
+        if len(self.inventory) == 0:
+            print(f'\n{self.name} has no items.')
+        else:
+            print(f'\n{self.name} has the following item(s):')
+            for item in self.inventory:
+                print(item.name)
+
     def addItem(self, action):
         for item in self.current_room.items:
             if item.name == action:
                 self.inventory.append(item)
                 self.current_room.removeItem(item)
             else:
-                print(f'Cannot add {item.name}.')
+                print(f'\nCannot add {item.name}.')
     
     def dropItem(self, action):
         for item in self.inventory:
@@ -21,4 +29,4 @@ class Player:
                 self.inventory.remove(item)
                 self.current_room.addItems(item)
             else:
-                print(f'Cannot drop {item.name}.')
+                print(f'\nCannot drop {item.name}.')
