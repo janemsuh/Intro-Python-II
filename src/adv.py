@@ -85,16 +85,16 @@ while play == True:
             exit()
         elif (move == 'n') & (player.current_room.n_to != None):
             player.current_room = player.current_room.n_to
-            print(f'\nMoved NORTH to the {player.current_room.name}')
+            print(f'\nMoved NORTH to the {player.current_room.name}...')
         elif (move == 's') & (player.current_room.s_to != None):
             player.current_room = player.current_room.s_to
-            print(f'\nMoved SOUTH to the {player.current_room.name}')
+            print(f'\nMoved SOUTH to the {player.current_room.name}...')
         elif (move == 'e') & (player.current_room.e_to != None):
             player.current_room = player.current_room.e_to
-            print(f'\nMoved EAST to the {player.current_room.name}')
+            print(f'\nMoved EAST to the {player.current_room.name}...')
         elif (move == 'w') & (player.current_room.w_to != None):
             player.current_room = player.current_room.w_to
-            print(f'\nMoved WEST to the {player.current_room.name}')
+            print(f'\nMoved WEST to the {player.current_room.name}...')
         elif move == 'i':
             player.player_inventory()
         elif move == 'r':
@@ -105,3 +105,12 @@ while play == True:
             print('\n****** NOT A VALID MOVE ******')
         else:
             print(f'\nStill in the {player.current_room.name}.')
+    elif len(moves) == 2:
+        verb = moves[0]
+        item = moves[1]
+        if verb == 'take':
+            player.addItem(item)
+        elif verb == 'drop':
+            player.dropItem(item)
+    else:
+        print('\nNeed a break?')

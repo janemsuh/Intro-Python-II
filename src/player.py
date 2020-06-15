@@ -18,15 +18,17 @@ class Player:
     def addItem(self, action):
         for item in self.current_room.items:
             if item.name == action:
+                print(f'\nPicked up {item.name}!')
                 self.inventory.append(item)
                 self.current_room.removeItem(item)
             else:
-                print(f'\nCannot add {item.name}.')
+                print(f'\nCannot pick up {item.name}.')
     
     def dropItem(self, action):
         for item in self.inventory:
             if item.name == action:
+                print(f'\nDropped {item.name}.')
                 self.inventory.remove(item)
-                self.current_room.addItems(item)
+                self.current_room.addItem(item)
             else:
                 print(f'\nCannot drop {item.name}.')
