@@ -1,4 +1,15 @@
+import textwrap
+
 from room import Room
+from player import Player
+from item import Item
+
+# Declare all the items
+
+ring = Item('ring', 'family heirloom')
+hat = Item('hat', 'former property of Indiana Jones')
+rope = Item('rope', 'useful for climbing')
+journal = Item('journal', 'blank or written in invisible ink?')
 
 # Declare all the rooms
 
@@ -33,6 +44,12 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
+# Add items to rooms
+
+room['outside'].items.append(hat)
+room['foyer'].items.append(rope)
+room['narrow'].items.extend([ring, journal])
+
 #
 # Main
 #
@@ -49,3 +66,51 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
+play = True
+new_player = input("Enter player's name: ")
+player = Player(new_player, room['outside'])
+print(f'\n{player.name} is ready to move...')
+print(f'Starting Location: {player.current_room.name}')
+
+while play == True:
+    # ask for user input
+    move = input(f"\nWhat is {player.name}'s next move? (n, s, e, w, i, r, l, take [item], drop [item], q): ")
+    moves = move.split()
+
+    # parse move
+    if len(moves) == 1:
+        if move == 'q':
+            print('\nGame over!')
+            exit()
+        elif (move == 'n') & (player.current_room.n_to != None):
+            player.current_room = player.current_room.n_to
+            print(f'\nMoved NORTH to the {player.current_room.name}...')
+        elif (move == 's') & (player.current_room.s_to != None):
+            player.current_room = player.current_room.s_to
+            print(f'\nMoved SOUTH to the {player.current_room.name}...')
+        elif (move == 'e') & (player.current_room.e_to != None):
+            player.current_room = player.current_room.e_to
+            print(f'\nMoved EAST to the {player.current_room.name}...')
+        elif (move == 'w') & (player.current_room.w_to != None):
+            player.current_room = player.current_room.w_to
+            print(f'\nMoved WEST to the {player.current_room.name}...')
+        elif move == 'i':
+            player.player_inventory()
+        elif move == 'r':
+            player.current_room.room_items()
+        elif move == 'l':
+            print(f'\n{textwrap.shorten(player.current_room.description, 200)}')
+        elif (move not in ['n', 's', 'e', 'w', 'i', 'r', 'l']):
+            print('\n****** NOT A VALID MOVE ******')
+        else:
+            print(f'\nStill in the {player.current_room.name}.')
+    elif len(moves) == 2:
+        verb = moves[0]
+        item = moves[1]
+        if verb == 'take':
+            player.addItem(item)
+        elif verb == 'drop':
+            player.dropItem(item)
+    else:
+        print('\nNeed a break?')
